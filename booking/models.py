@@ -15,6 +15,22 @@ class TravelOption(models.Model):
     date_time = models.DateTimeField() 
     price = models.DecimalField(max_digits=10, decimal_places=2) 
     available_seats = models.PositiveIntegerField() 
-    
+
     def __str__(self):
         return f"{self.type} from {self.source} to {self.destination}"
+
+class Booking(models.Model):
+    STATUS_CHOICES = (
+        ('Confirmed', 'Confirmed'),
+        ('Cancelled', 'Cancelled'),
+    )
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    travel_option = models.ForeignKey(TravelOption, on_delete=models.CASCADE) 
+    number_of_seats = models.PositiveIntegerField() 
+    total_price = models.DecimalField(max_digits=10, decimal_places=2) 
+    booking_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Confirmed') 
+
+    def __str__(self):
+        return f"Booking {self.id} by {self.user.username}"
