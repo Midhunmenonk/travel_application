@@ -1,6 +1,8 @@
 # Travel Booking Application
 
 project link : https://midhun.pythonanywhere.com/
+
+
 A Django-based travel booking application that allows users to browse and search for travel options including flights, trains, and buses.
 
  Project Structure
