@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Travel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Book Your Travel</h3>
+      </div>
+      <div class="card-body">
+        <!-- Travel Option Details -->
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <h4>Travel Details</h4>
+            <div class="card bg-light">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h5 class="text-primary">{{ travel_option.type }}</h5>
+                    <p class="text-muted">{{ travel_option.get_type_display }}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p><strong>From:</strong> {{ travel_option.source }}</p>
+                    <p><strong>To:</strong> {{ travel_option.destination }}</p>
+                  </div>
+                  <div class="col-md-3">
+                    <p><strong>Date:</strong> {{ travel_option.date_time|date:"D, d M Y" }}</p>
+                    <p><strong>Time:</strong> {{ travel_option.date_time|time:"H:i" }}</p>
+                  </div>
+                  <div class="col-md-2 text-end">
+                    <h4 class="text-success">₹{{ travel_option.price }}</h4>
+                    <p class="text-info">{{ travel_option.available_seats }} seats left</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Form -->
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="{{ form.number_of_seats.id_for_label }}" class="form-label">
+                  Number of Seats
+                </label>
+                {{ form.number_of_seats }}
+                {% if form.number_of_seats.errors %}
+                  <div class="alert alert-danger mt-1">
+                    {{ form.number_of_seats.errors }}
+                  </div>
+                {% endif %}
+                <div class="form-text">Maximum {{ travel_option.available_seats }} seats available</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Price per Seat</label>
+                <div class="form-control-plaintext">₹{{ travel_option.price }}</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Total Price</label>
+                <div class="form-control-plaintext" id="total-price">₹{{ travel_option.price }}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Available Seats</label>
+                <div class="form-control-plaintext">{{ travel_option.available_seats }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'travel' %}" class="btn btn-secondary me-md-2">Cancel</a>
+            <button type="submit" class="btn btn-success">Confirm Booking</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Calculate total price based on number of seats
+document.getElementById('{{ form.number_of_seats.id_for_label }}').addEventListener('input', function() {
+    const seats = parseInt(this.value) || 0;
+    const pricePerSeat = {{ travel_option.price }};
+    const totalPrice = seats * pricePerSeat;
+    document.getElementById('total-price').textContent = '₹' + totalPrice.toFixed(2);
+});
+</script>
+{% endblock %}

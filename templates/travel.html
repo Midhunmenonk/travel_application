@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Available Trips{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">Find Your Next Adventure 🌍</h1>
+      <p class="col-md-8 fs-4">Browse our available flights, trains, and buses. Use the filters below to find the perfect trip for you.</p>
+    </div>
+  </div>
+
+  <!-- Search and Filter Form -->
+  <div class="card card-body mb-4">
+    <h3 class="mb-3">Filter Trips</h3>
+    <form method="get" action="{% url 'travel' %}">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label for="type" class="form-label">Type</label>
+          <select name="type" id="type" class="form-select">
+            <option value="">All Types</option>
+            <option value="Flight">Flight</option>
+            <option value="Train">Train</option>
+            <option value="Bus">Bus</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="source" class="form-label">Source</label>
+          <input type="text" name="source" id="source" class="form-control" placeholder="e.g., Mumbai">
+        </div>
+        <div class="col-md-3">
+          <label for="destination" class="form-label">Destination</label>
+          <input type="text" name="destination" id="destination" class="form-control" placeholder="e.g., Delhi">
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary w-100">Search</button>
+          <a href="{% url 'travel' %}" class="btn btn-secondary w-100 ms-2">Clear</a>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Display Travel Options -->
+  <h2 class="mb-4">Available Trips</h2>
+  <div class="row">
+    {% for travel in travels %}
+      <div class="col-md-12 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-2">
+                <h5 class="card-title">{{ travel.type }}</h5>
+                <p class="card-text text-muted">{{ travel.get_type_display }}</p>
+              </div>
+              <div class="col-md-4">
+                <p class="card-text"><strong>From:</strong> {{ travel.source }}</p>
+                <p class="card-text"><strong>To:</strong> {{ travel.destination }}</p>
+              </div>
+              <div class="col-md-3">
+                <p class="card-text"><strong>Date:</strong> {{ travel.date_time|date:"D, d M Y" }}</p>
+                <p class="card-text"><strong>Time:</strong> {{ travel.date_time|time:"H:i" }}</p>
+              </div>
+              <div class="col-md-3 text-end">
+                <h4>₹{{ travel.price }}</h4>
+                <p class="text-success">{{ travel.get_available_seats_display }}</p>
+                {% if travel.available_seats > 0 %}
+                  <a href="{% url 'create_booking' travel.id %}" class="btn btn-success">Book Now</a>
+                {% else %}
+                  <button class="btn btn-secondary" disabled>No Seats Available</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+          No available trips found matching your criteria. Please try a different search.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to TravelApp{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5 text-center">
+      <h1 class="display-5 fw-bold">Welcome to TravelApp 🌍</h1>
+      <p class="col-md-8 fs-4 mx-auto">Your one-stop destination for booking flights, trains, and buses. Discover amazing destinations and plan your next adventure with ease.</p>
+      
+      {% if user.is_authenticated %}
+        <div class="mt-4">
+          <a href="{% url 'travel' %}" class="btn btn-primary btn-lg me-3">Browse Travel Options</a>
+          <a href="{% url 'my_bookings' %}" class="btn btn-outline-primary btn-lg">View My Bookings</a>
+        </div>
+      {% else %}
+        <div class="mt-4">
+          <a href="{% url 'login' %}" class="btn btn-primary btn-lg me-3">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg">Register</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="row mb-5">
+    <div class="col-md-4 text-center mb-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-primary">✈️ Flights</h3>
+          <p class="card-text">Book domestic and international flights with competitive prices and flexible schedules.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-success">🚂 Trains</h3>
+          <p class="card-text">Comfortable train journeys with scenic routes and affordable ticket prices.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h3 class="text-info">🚌 Buses</h3>
+          <p class="card-text">Convenient bus services connecting cities and towns across the country.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="text-center mb-4">How It Works</h2>
+      <div class="row">
+        <div class="col-md-3 text-center mb-3">
+          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+            <span class="fw-bold">1</span>
+          </div>
+          <h5 class="mt-3">Sign Up</h5>
+          <p>Create your account in minutes</p>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+          <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+            <span class="fw-bold">2</span>
+          </div>
+          <h5 class="mt-3">Search</h5>
+          <p>Find your perfect travel option</p>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+          <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+            <span class="fw-bold">3</span>
+          </div>
+          <h5 class="mt-3">Book</h5>
+          <p>Reserve your seats instantly</p>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+          <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+            <span class="fw-bold">4</span>
+          </div>
+          <h5 class="mt-3">Travel</h5>
+          <p>Enjoy your journey!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  {% if not user.is_authenticated %}
+    <div class="text-center py-5 bg-light rounded-3">
+      <h3>Ready to Start Your Journey?</h3>
+      <p class="lead">Join thousands of travelers who trust us for their bookings.</p>
+      <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started Today</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Cancel Booking{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow">
+      <div class="card-header bg-danger text-white">
+        <h3 class="mb-0">Cancel Booking</h3>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-warning">
+          <h5>⚠️ Are you sure you want to cancel this booking?</h5>
+          <p class="mb-0">This action cannot be undone. Cancelled bookings will not be refunded automatically.</p>
+        </div>
+
+        <!-- Booking Details -->
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <h4>Booking Details</h4>
+            <div class="card bg-light">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h5 class="text-primary">{{ booking.travel_option.type }}</h5>
+                    <p class="text-muted">{{ booking.travel_option.get_type_display }}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p><strong>From:</strong> {{ booking.travel_option.source }}</p>
+                    <p><strong>To:</strong> {{ booking.travel_option.destination }}</p>
+                  </div>
+                  <div class="col-md-3">
+                    <p><strong>Date:</strong> {{ booking.travel_option.date_time|date:"D, d M Y" }}</p>
+                    <p><strong>Time:</strong> {{ booking.travel_option.date_time|time:"H:i" }}</p>
+                  </div>
+                  <div class="col-md-2 text-end">
+                    <h6 class="text-success">₹{{ booking.total_price }}</h6>
+                    <p class="text-info">{{ booking.number_of_seats }} seats</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cancellation Form -->
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Booking ID</label>
+                <div class="form-control-plaintext">{{ booking.id }}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Booking Date</label>
+                <div class="form-control-plaintext">{{ booking.booking_date|date:"d M Y, H:i" }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'my_bookings' %}" class="btn btn-secondary me-md-2">Keep Booking</a>
+            <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
