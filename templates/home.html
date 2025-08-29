@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block title %}Welcome to TravelApp{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5 text-center">
+<div class="container" style="background-color: aliceblue;  border-radius: 20px;">
+  <div class="p-5 mb-4  rounded-3" >
+    <div class="container-fluid py-5 text-center" style="background-color: #f9e3c7;  border-radius: 40px;" >
+      
       <h1 class="display-5 fw-bold">Welcome to TravelApp 🌍</h1>
       <p class="col-md-8 fs-4 mx-auto">Your one-stop destination for booking flights, trains, and buses. Discover amazing destinations and plan your next adventure with ease.</p>
       
@@ -24,17 +27,17 @@
   </div>
 
   <!-- Features Section -->
-  <div class="row mb-5">
-    <div class="col-md-4 text-center mb-4">
-      <div class="card h-100 border-0 shadow-sm">
-        <div class="card-body">
+  <div class="row mb-5" style="border-radius: 20px ;">
+    <div class="col-md-4 text-center mb-4" >
+      <div class="card h-100 border-0 shadow-sm" style="background-color: #feefdb; border-radius: 20px;">
+        <div class="card-body" >
           <h3 class="text-primary">✈️ Flights</h3>
           <p class="card-text">Book domestic and international flights with competitive prices and flexible schedules.</p>
         </div>
       </div>
     </div>
     <div class="col-md-4 text-center mb-4">
-      <div class="card h-100 border-0 shadow-sm">
+      <div class="card h-100 border-0 shadow-sm" style="background-color: #feefdb; border-radius: 20px;">
         <div class="card-body">
           <h3 class="text-success">🚂 Trains</h3>
           <p class="card-text">Comfortable train journeys with scenic routes and affordable ticket prices.</p>
@@ -42,7 +45,7 @@
       </div>
     </div>
     <div class="col-md-4 text-center mb-4">
-      <div class="card h-100 border-0 shadow-sm">
+      <div class="card h-100 border-0 shadow-sm" style="background-color: #feefdb; border-radius: 20px;">
         <div class="card-body">
           <h3 class="text-info">🚌 Buses</h3>
           <p class="card-text">Convenient bus services connecting cities and towns across the country.</p>
@@ -90,7 +93,7 @@
 
   <!-- Call to Action -->
   {% if not user.is_authenticated %}
-    <div class="text-center py-5 bg-light rounded-3">
+    <div class="text-center py-5  rounded-3" >
       <h3>Ready to Start Your Journey?</h3>
       <p class="lead">Join thousands of travelers who trust us for their bookings.</p>
       <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started Today</a>

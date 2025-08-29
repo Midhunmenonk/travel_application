@@ -2,15 +2,7 @@
 
 A Django-based travel booking application that allows users to browse and search for travel options including flights, trains, and buses.
 
-## Features
-
-- User Authentication: Register, login, logout, and profile management
-- Travel Options: Browse flights, trains, and buses with filtering
-- Search & Filter: Filter by travel type, source, and destination
-- Responsive Design: Modern Bootstrap-based UI
-- Admin Interface: Full admin panel for managing travel options
-
-## Project Structure
+ Project Structure
 
 
 travel_application/
